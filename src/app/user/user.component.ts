@@ -1,4 +1,4 @@
-import {Component, computed, input, output} from '@angular/core';
+import {Component, computed, Input, input, output} from '@angular/core';
 import {type User} from "./user.model";
 
 @Component({
@@ -10,6 +10,7 @@ import {type User} from "./user.model";
 })
 export class UserComponent {
   user = input.required<User>();
+  @Input({ required: true }) selected!: boolean;
   select = output<string>();
 
   imagePath = computed(() => 'assets/users/' + this.user().avatar);
