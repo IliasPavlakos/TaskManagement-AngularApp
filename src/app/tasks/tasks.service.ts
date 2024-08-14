@@ -4,6 +4,13 @@ import {Injectable} from "@angular/core";
 @Injectable({ providedIn: "root" })
 export class TasksService {
 
+  constructor() {
+    const tasks = localStorage.getItem("tasks");
+    if(tasks){
+      this.dummyTasks = JSON.parse(tasks);
+    }
+  }
+
   private dummyTasks = [
     {
       id: 't1',
@@ -39,11 +46,17 @@ export class TasksService {
       title: taskData.title,
       summary: taskData.summary,
       dueDate: taskData.date,
-    })
+    });
+    this.saveTasks();
   }
 
   removeTask(taskId:string){
     this.dummyTasks = this.dummyTasks.filter((task) => task.id !== taskId);
+    this.saveTasks();
+  }
+
+  private saveTasks(){
+    localStorage.setItem("tasks", JSON.stringify(this.dummyTasks));
   }
 
 }
